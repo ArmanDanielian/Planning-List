@@ -1,0 +1,8 @@
+.pos2{
+  position: relative;
+}
+.pos1{
+  display: inline-block;
+  position: absolute;
+  right: 0;
+}

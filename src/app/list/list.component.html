@@ -1,0 +1,167 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-2">
+
+    </div>
+
+    <div class="col-8">
+        <form [formGroup]="formFilter">
+          <div class="form-group">
+            <select class="form-control" id="exampleFormControlSelect1" formControlName="status">
+              <option>all</option>
+              <option>finished</option>
+              <option>notFinished</option>
+              <option>failed</option>
+              <option>today</option>
+            </select>
+          </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <input class="form-control" type="date" id="start" name="trip-start"
+                       value="2018-07-22"
+                       min="2019-01-01" max="2019-12-31" formControlName="dateFrom">
+              </div>
+              <div class="form-group col-6">
+                <input class="form-control" type="date" id="start" name="trip-start"
+                       value="2018-07-22"
+                       min="2019-01-01" max="2019-12-31" formControlName="dateTo">
+              </div>
+            </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Place name" formControlName="place">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+          </div>
+        </form>
+    </div>
+
+    <div class="col-2">
+
+    </div>
+
+  </div>
+
+  <hr>
+
+  <div class="row">
+
+    <div class="col-6">
+      <!-- Button trigger modal -->
+      <button (click)="openModal()" type="button" class="btn btn-light" data-toggle="modal"
+              data-target="#exampleModal">
+        add List
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Planning list</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <form [formGroup]="form">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Title" formControlName="title">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Description" formControlName="description">
+                </div>
+                <div class="form-group">
+                  <select class="form-control" id="exampleFormControlSelect1" formControlName="status">
+                    <option>finished</option>
+                    <option>notFinished</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="date" id="start" name="trip-start"
+                         value="2018-07-22"
+                         min="2019-01-01" max="2019-12-31" formControlName="date">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Place name" formControlName="placeName">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Address" formControlName="address">
+                </div>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" *ngIf="flag" (click)="save()" [disabled]="form.invalid">Save</button>
+              <button type="button" class="btn btn-light" data-dismiss="modal" *ngIf="!flag" (click)="change()" [disabled]="form.invalid">Change</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <input class="form-control" type="text" placeholder="Search" (keyup)="kochak($event)">
+    </div>
+
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col">
+      <div class="accordion-fluid" id="accordionExample">
+
+        <div class="card" *ngFor="let n of data | search : searchingItem | filter : formFilter.value; let i = index">
+          <div class="card-header" id="heading{{i}}">
+            <div class="mb-0 pos2">
+              <button class="btn btn-link" type="button" data-toggle="collapse" attr.data-target="#collapse{{i}}"
+                      aria-expanded="true" attr.aria-controls="collapse{{i}}">
+                {{n.title}}
+              </button>
+              <span>
+                {{ n.status }}
+              </span>
+              <div class="pos1">
+              <button (click)="index(n)" type="button" class="btn btn-light" data-toggle="modal"
+                      data-target="#exampleModal">
+                edit
+              </button>
+              <button (click)="delete(n)" type="button" class="btn btn-light">
+                delete
+              </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="collapse{{i}}" class="collapse show" attr.aria-labelledby="heading{{i}}"
+               data-parent="#accordionExample">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-3">
+                  {{n.description}}
+                </div>
+                <div class="col-3">
+                  {{n.date}}
+                </div>
+                <div class="col-3">
+                  {{n.placeName}}
+                </div>
+                <div class="col-3">
+                  {{n.address}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
